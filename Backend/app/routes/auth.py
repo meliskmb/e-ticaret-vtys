@@ -337,4 +337,15 @@ def delete_product(product_id):
 
     return jsonify({"message": "Ürün silindi (soft-delete olarak işaretlendi)."}), 200
 
-
+@auth_bp.route('/products', methods=['GET'])
+def get_products():
+    products_cursor = mongo.db.products.find({"deleted": {"$ne": True}})
+    products = []
+    for product in products_cursor:
+        products.append({
+            "id": str(product["_id"]),
+            "name": product["name"],
+            "price": product["price"],
+            "stock": product["stock"]
+        })
+    return jsonify({"products": products}), 200
