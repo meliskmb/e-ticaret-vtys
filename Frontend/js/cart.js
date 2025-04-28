@@ -74,4 +74,18 @@ document.addEventListener('DOMContentLoaded', function() {
             alert('Ödeme sırasında bir hata oluştu.');
         });
     });
+
+    if (token) {
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        const role = payload.role;
+
+        if (role === 'supplier') {
+            document.getElementById('supplier-link').style.display = 'inline-block';
+        }
+    }
+
+    document.getElementById('logout-btn').addEventListener('click', function() {
+        localStorage.removeItem('token');
+        window.location.href = 'login.html';
+    });
 });

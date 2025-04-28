@@ -1,9 +1,22 @@
-// js/add_product.js
 
 document.addEventListener('DOMContentLoaded', function() {
     const token = localStorage.getItem('token');
     const addProductForm = document.getElementById('add-product-form');
     const productList = document.getElementById('product-list');
+
+    if (token) {
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        const role = payload.role;
+
+        if (role === 'supplier') {
+            document.getElementById('supplier-link').style.display = 'inline-block';
+        }
+    }
+
+    document.getElementById('logout-btn').addEventListener('click', function() {
+        localStorage.removeItem('token');
+        window.location.href = 'login.html';
+    });
 
     if (!token) {
         alert('Bu sayfaya erişmek için giriş yapmalısınız.');
