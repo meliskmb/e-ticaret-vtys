@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Ürün Yönetimi</title>
+    <link rel="stylesheet" href="css/add_product.css">
+</head>
+<body>
+
+    <h1>Ürün Yönetimi</h1>
+
+    <form id="add-product-form">
+        <input type="text" id="name" placeholder="Ürün Adı" required>
+        <input type="number" id="price" placeholder="Fiyat (₺)" required>
+        <input type="number" id="stock" placeholder="Stok Adedi" required>
+        <button type="submit">Ürün Ekle</button>
+    </form>
+
+    <h2>Ürün Listesi</h2>
+    <div id="product-list">
+        <!-- Ürünler burada listelenecek -->
+    </div>
+
+    <script src="js/add_product.js"></script>
+</body>
+</html>
