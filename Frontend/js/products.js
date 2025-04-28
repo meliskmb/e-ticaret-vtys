@@ -1,4 +1,4 @@
-const API_URL = 'https://2557-176-220-34-206.ngrok-free.app'; // 💥 Güncel ngrok linkin burada
+const API_URL = 'https://3b16-176-30-250-25.ngrok-free.app'; // 💥 Güncel ngrok linkin burada
 
 document.addEventListener('DOMContentLoaded', function() {
     const productList = document.getElementById('product-list');
