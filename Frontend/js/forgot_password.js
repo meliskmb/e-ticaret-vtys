@@ -1,3 +1,6 @@
+
+const API_URL = 'https://3b16-176-30-250-25.ngrok-free.app'; // 💥 Backend ngrok linkin burada
+
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('forgot-password-form');
 
@@ -6,10 +9,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const email = document.getElementById('email').value;
 
-        fetch('http://localhost:5000/forgot-password', {
+        fetch(`${API_URL}/forgot-password`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'ngrok-skip-browser-warning': 'true' // 💥 Ngrok güvenlik ekranını bypass etmek için
             },
             body: JSON.stringify({ email })
         })

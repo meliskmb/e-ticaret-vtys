@@ -10,6 +10,7 @@ from flask_mail import Message
 from datetime import timedelta
 from flask import current_app
 from bson import ObjectId, errors
+from flask_jwt_extended import decode_token
 
 
 auth_bp = Blueprint('auth', __name__)
@@ -225,36 +226,60 @@ def forgot_password():
     if not user:
         return jsonify({"message": "Bu e-posta ile eşleşen kullanıcı yok."}), 404
 
-    token = create_access_token(identity=str(user.id), expires_delta=timedelta(minutes=15))
+    token = create_access_token(identity=str(user.id), expires_delta=timedelta(hours=1))
+
+    # Şifre sıfırlama linki FRONTEND sayfasına yönlendirecek
+    NGROK_URL = "https://3b16-176-30-250-25.ngrok-free.app"  # <-- Güncel ngrok adresin
+
+    reset_link = f"{NGROK_URL}/reset-password.html?token={token}"
 
     msg = Message("Şifre Sıfırlama Bağlantısı",
                   sender=current_app.config['MAIL_USERNAME'],
                   recipients=[email])
-    msg.body = f"Şifrenizi sıfırlamak için bu bağlantıya tıklayın:\nhttp://localhost:5000/reset-password?token={token}"
+    msg.body = f"Şifrenizi sıfırlamak için bu bağlantıya tıklayın:\n{reset_link}"
 
     mail.send(msg)
 
     return jsonify({"message": "Şifre sıfırlama bağlantısı e-posta ile gönderildi."}), 200
 
 
+
+
+# Şifre sıfırlama linkine TIKLAYINCA çalışacak (GET)
 @auth_bp.route('/reset-password', methods=['POST'])
-@jwt_required()
-def reset_password():
+@jwt_required(locations=["headers", "query_string"])
+def reset_password_post():
     user_id = get_jwt_identity()
     data = request.get_json()
     new_password = data.get('password')
 
     if not new_password:
-        return jsonify({"message": "Yeni şifre boş olamaz"}), 400
+        return jsonify({"message": "Yeni şifre boş olamaz."}), 400
 
     user = User.query.get(user_id)
     if not user:
-        return jsonify({"message": "Kullanıcı bulunamadı"}), 404
+        return jsonify({"message": "Kullanıcı bulunamadı."}), 404
 
     user.password = generate_password_hash(new_password)
     db.session.commit()
 
     return jsonify({"message": "Şifreniz başarıyla güncellendi."}), 200
+
+
+@auth_bp.route('/reset-password', methods=['GET'])
+def reset_password_get():
+    token = request.args.get('token')
+
+    if not token:
+        return jsonify({"message": "Token eksik."}), 400
+
+    try:
+        decoded_token = decode_token(token)
+        user_id = decoded_token['sub']
+        return jsonify({"message": "Token geçerli.", "user_id": user_id}), 200
+    except Exception as e:
+        return jsonify({"message": "Geçersiz veya süresi dolmuş token."}), 400
+
 
 
 @auth_bp.route('/update-profile', methods=['PUT'])
