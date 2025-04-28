@@ -1,1 +1,1 @@
-# JWT-login-project
+# e-ticaret-vtys
