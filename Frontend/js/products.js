@@ -1,15 +1,24 @@
+const API_URL = 'https://2557-176-220-34-206.ngrok-free.app'; // 💥 Güncel ngrok linkin burada
+
 document.addEventListener('DOMContentLoaded', function() {
     const productList = document.getElementById('product-list');
 
-    fetch('http://localhost:5000/products', {
+    fetch(`${API_URL}/products`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
+            'ngrok-skip-browser-warning': 'true' // 💥 Bu header eklenince ngrok güvenlik ekranı bypass oluyor
         }
     })
-    .then(response => response.json())
+    .then(response => {
+        console.log("Raw response geldi:", response);
+        return response.json();
+    })
     .then(data => {
-        if (Array.isArray(data.products)) {
+        console.log("Parsed JSON verisi:", data);
+
+        if (data.products && Array.isArray(data.products)) {
+            productList.innerHTML = ""; // Önce eski ürünleri temizle
             data.products.forEach(product => {
                 const productCard = document.createElement('div');
                 productCard.className = 'product-card';
@@ -26,13 +35,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 productList.appendChild(productCard);
             });
 
-            setupAddToCartButtons(); // Sepete ekleme butonlarına click eventleri ekle
+            setupAddToCartButtons();
         } else {
             productList.innerHTML = '<p>Ürün bulunamadı.</p>';
         }
     })
     .catch(error => {
-        console.error('Hata:', error);
+        console.error('Ürünler yüklenirken hata oluştu:', error);
         productList.innerHTML = '<p>Ürünler yüklenirken hata oluştu.</p>';
     });
 });
@@ -56,11 +65,12 @@ function addToCart(name, price) {
         return;
     }
 
-    fetch('http://localhost:5000/add-to-cart', {
+    fetch(`${API_URL}/add-to-cart`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ${token}'
+            'Authorization': `Bearer ${token}`,
+            'ngrok-skip-browser-warning': 'true' // 💥 Buraya da ekledim!
         },
         body: JSON.stringify({ name, price })
     })
@@ -69,7 +79,10 @@ function addToCart(name, price) {
         alert(data.message);
     })
     .catch(error => {
-        console.error('Hata:', error);
-        alert('Sepete eklerken bir hata oluştu.');
+        console.error('Sepete ürün eklerken hata:', error);
+        alert('Sepete ürün eklerken bir hata oluştu.');
     });
 }
+
+
+
