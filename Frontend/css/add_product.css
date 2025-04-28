@@ -44,11 +44,13 @@ input, button, select {
 .update-btn, .delete-btn {
     margin-top: 5px;
     padding: 8px 12px;
+    width: 100%;
     background-color: #007bff;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    display: block;
 }
 
 .update-btn:hover {
