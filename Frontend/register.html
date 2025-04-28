@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Kayıt Ol</title>
+    <link rel="stylesheet" href="css/login.css"> <!-- login.css yine kullanılacak -->
+</head>
+<body>
+
+    <h1>Kayıt Ol</h1>
+
+    <form id="register-form">
+        <input type="text" id="first-name" placeholder="Ad" required>
+        <input type="text" id="last-name" placeholder="Soyad" required>
+        <input type="email" id="email" placeholder="Email" required>
+        <input type="password" id="password" placeholder="Şifre" required>
+
+        <select id="role" required>
+            <option value="customer">Müşteri</option>
+            <option value="supplier">Tedarikçi</option>
+        </select>
+
+        <button type="submit">Kayıt Ol</button>
+    </form>
+
+    <p>Zaten hesabınız var mı? <a href="login.html">Giriş Yap</a></p>
+
+    <script src="js/auth.js"></script>
+</body>
+</html>
