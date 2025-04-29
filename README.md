@@ -138,36 +138,36 @@ JWT tabanlı güvenli authentication sistemi ve işlem bazlı e-posta bildirimle
 git clone [repo-linki]
 cd eTicaretVtys
 ```
-2. Sanal Ortamı Oluştur ve Aktifleştir
+### 2. Sanal Ortamı Oluştur ve Aktifleştir
 ```bash
 python -m venv venv
 ```
-CMD kullanıyorsan:
+ CMD kullanıyorsan:
 ```bash
 venv\Scripts\activate.bat
 ```
-PowerShell kullanıyorsan:
+ PowerShell kullanıyorsan:
 ```bash
 Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 .\venv\Scripts\Activate.ps1
 ```                                                                                                                                                                                            
-4. Gerekli Paketleri Yükle
+### 3. Gerekli Paketleri Yükle
 ```bash
 pip install -r requirements.txt
 ```                                                                                                                                                                                           
-6. MySQL ve MongoDB'yi Başlat
+### 4. MySQL ve MongoDB'yi Başlat
 XAMPP üzerinden MySQL servisini başlat.
 MongoDB Compass üzerinden eTicaretDB veritabanını oluştur.
 
-7. Flask Uygulamasını Çalıştır
+### 5. Flask Uygulamasını Çalıştır
 ```bash
 python run.py
 ```
 Çalışınca şu mesajı görmelisin:
 Running on http://127.0.0.1:5000/                                                                                                                                                                                    
-🌐 Ngrok Kullanımı (Frontend ile Bağlantı için)
+## 🌐 Ngrok Kullanımı (Frontend ile Bağlantı için)
 Başka bilgisayardan frontend erişimi için ngrok kullanılır.                                                                                                                                                          
-Ngrok Kurulumu
+### Ngrok Kurulumu
 Ngrok İndir
 Terminalde çalıştır:
 ngrok authtoken [senin-tokenin]
@@ -178,7 +178,7 @@ Ngrok sana bir link verecek.
 Frontend tarafı bu linki kullanarak backend'e ulaşacak.
 DİKKAT: Ngrok linki her başlatıldığında değişir!
 
-⚡ Olası Hatalar ve Çözümleri
+##⚡ Olası Hatalar ve Çözümleri
 Hata	Çözüm
 'ngrok' is not recognized	CMD'de .\ngrok.exe komutu ile çalıştır.
 ModuleNotFoundError: No module named 'flask'	Sanal ortamı aktif et ve pip install flask komutu ile Flask yükle.
@@ -186,7 +186,7 @@ SQLAlchemy OperationalError	MySQL servisini başlatmayı unutma.
 MongoDB Connection Error	MongoDB Compass'ın açık olduğundan emin ol.
 JWT Token Missing	API isteklerinde Authorization header ekle: Bearer {token}.
 CORS Policy Error	Flask'a from flask_cors import CORS ekle ve CORS(app) kullan.                                                                                                                                      
-🛡️ Projenin Sağladığı Özellikler
+## 🛡️ Projenin Sağladığı Özellikler
 Kullanıcı kayıt ve login işlemleri
 
 JWT ile güvenli kimlik doğrulama
@@ -205,12 +205,13 @@ Sepet ve sipariş sonrası e-posta bildirimleri
 
 API testleri (Postman ile)
 
-👨‍💻 Proje Ekibi
-Sema Hacıbekiroğlu - 427635
+## 👨‍💻 Proje Ekibi
 
-Mihriban Melis Kömbe - 427636
+Sema Hacıbekiroğlu 
 
-Zeynep Merve Koyuncu - 427642
+Mihriban Melis Kömbe 
+
+Zeynep Merve Koyuncu 
 
 
 
